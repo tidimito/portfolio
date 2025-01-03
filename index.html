@@ -16,11 +16,31 @@
             color: #fff;
             padding: 1rem 0;
             text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        header nav {
+            margin-top: 1rem;
+        }
+        header nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            transition: background 0.3s, border 0.3s;
+        }
+        header nav a:hover {
+            background: #555;
+            border-color: #fff;
         }
         .container {
             padding: 1rem;
         }
-        .about {
+        .about, .apps {
             margin-bottom: 2rem;
         }
         .app {
@@ -45,13 +65,18 @@
     <header>
         <h1>Ilya's Portfolio</h1>
         <p>Android Developer</p>
+        <nav>
+            <a href="#about">About Me</a>
+            <a href="#apps">My Applications</a>
+            <a href="#contact">Contact</a>
+        </nav>
     </header>
     <div class="container">
-        <section class="about">
+        <section id="about" class="about">
             <h2>About Me</h2>
             <p>Hello! My name is Ilya, and I am an experienced Android Developer. I specialize in building mobile applications that are user-friendly, efficient, and meet client requirements. Below, you can find a showcase of my work.</p>
         </section>
-        <section class="apps">
+        <section id="apps" class="apps">
             <h2>My Applications</h2>
             <div class="app">
                 <h3>App Name 1</h3>
@@ -65,7 +90,29 @@
                 <p>Technologies: Java, Firebase, MVVM Architecture</p>
                 <a href="#">View on Google Play</a>
             </div>
+            <div class="app">
+                <h3>App Name 2</h3>
+                <p>Description: A brief description of what this app does and its key features.</p>
+                <p>Technologies: Java, Firebase, MVVM Architecture</p>
+                <a href="#">View on Google Play</a>
+            </div>
+            <div class="app">
+                <h3>App Name 2</h3>
+                <p>Description: A brief description of what this app does and its key features.</p>
+                <p>Technologies: Java, Firebase, MVVM Architecture</p>
+                <a href="#">View on Google Play</a>
+            </div>
+            <div class="app">
+                <h3>App Name 2</h3>
+                <p>Description: A brief description of what this app does and its key features.</p>
+                <p>Technologies: Java, Firebase, MVVM Architecture</p>
+                <a href="#">View on Google Play</a>
+            </div>
             <!-- Add more app sections as needed -->
+        </section>
+        <section id="contact" class="contact">
+            <h2>Contact Me</h2>
+            <p>Feel free to reach out to me at <a href="mailto:ilya@example.com">ilya@example.com</a>.</p>
         </section>
     </div>
     <footer>
