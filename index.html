@@ -3,106 +3,366 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Ilya</title>
+    <title>Dmitry Titov - Senior Android Developer</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        :root {
+            --sidebar-bg: #1f2937;
+            --sidebar-width: 16rem;
+            --accent-color: #2563eb;
+            --text-light: #f3f4f6;
+            --text-gray: #6b7280;
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            line-height: 1.6;
-            scroll-behavior: smooth;
+            box-sizing: border-box;
         }
-        header {
-            background: #333;
-            color: #fff;
-            padding: 1rem 0;
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #f3f4f6;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            position: fixed;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: var(--sidebar-bg);
+            color: var(--text-light);
+            padding: 1.5rem;
+        }
+
+        .profile {
             text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        header nav {
-            margin-top: 1rem;
-        }
-        header nav a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 10px;
-            font-size: 1rem;
-            padding: 0.5rem 1rem;
-            border: 1px solid transparent;
-            border-radius: 5px;
-            transition: background 0.3s, border 0.3s;
-        }
-        header nav a:hover {
-            background: #555;
-            border-color: #fff;
-        }
-        .container {
-            padding: 1rem;
-        }
-        .about, .apps {
             margin-bottom: 2rem;
         }
-        .app {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-bottom: 1rem;
+
+        .profile-img {
+            width: 8rem;
+            height: 8rem;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            overflow: hidden;
+        }
+
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile p {
+            color: var(--text-gray);
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-btn {
+            padding: 0.75rem 1rem;
+            border: none;
+            background: none;
+            color: var(--text-light);
+            text-align: left;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-btn.active {
+            background: var(--accent-color);
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 2rem;
+            max-width: 64rem;
+            margin: 0 auto 0 var(--sidebar-width);
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .portfolio-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .portfolio-image {
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: transform 0.2s;
+        }
+
+        .portfolio-image:hover {
+            transform: scale(1.05);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .mobile-menu {
+            display: none;
             padding: 1rem;
+            background: var(--sidebar-bg);
+            color: var(--text-light);
+            justify-content: space-between;
+            align-items: center;
         }
-        .app h3 {
-            margin: 0 0 0.5rem;
-        }
-        footer {
-            background: #333;
-            color: #fff;
-            text-align: center;
-            padding: 1rem 0;
-            margin-top: 2rem;
-        }
-        section {
-            scroll-margin-top: 70px;
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease-in-out;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Ilya's Portfolio</h1>
-        <p>Android Developer</p>
-        <nav>
-            <a href="#about">About Me</a>
-            <a href="#apps">My Applications</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    </header>
-    <div class="container">
-        <section id="about" class="about">
-            <h2>About Me</h2>
-            <p>Hello! My name is Ilya, and I am an experienced Android Developer. I specialize in building mobile applications that are user-friendly, efficient, and meet client requirements. Below, you can find a showcase of my work.</p>
-        </section>
-        <section id="apps" class="apps">
-            <h2>My Applications</h2>
-            <div class="app">
-                <h3>App Name 1</h3>
-                <p>Description: A brief description of what this app does and its key features.</p>
-                <p>Technologies: Kotlin, Jetpack Compose, REST APIs</p>
-                <a href="#">View on Google Play</a>
-            </div>
-            <div class="app">
-                <h3>App Name 2</h3>
-                <p>Description: A brief description of what this app does and its key features.</p>
-                <p>Technologies: Java, Firebase, MVVM Architecture</p>
-                <a href="#">View on Google Play</a>
-            </div>
-            <!-- Add more app sections as needed -->
-        </section>
-        <section id="contact" class="contact">
-            <h2>Contact Me</h2>
-            <p>Feel free to reach out to me at <a href="mailto:ilya@example.com">ilya@example.com</a>.</p>
-        </section>
+    <div class="mobile-menu">
+        <h1>Dmitry Titov</h1>
+        <button onclick="toggleMenu()" style="background: none; border: none; color: white; font-size: 1.5rem;">☰</button>
     </div>
-    <footer>
-        <p>© 2025 Ilya | <a href="mailto:ilya@example.com">Contact Me</a></p>
-    </footer>
+
+    <aside class="sidebar">
+        <div class="profile">
+            <div class="profile-img">
+                <img src="biometrik.jpg" alt="Dmitry Titov">
+            </div>
+            <h1>Dmitry Titov</h1>
+            <p>Senior Android Developer</p>
+        </div>
+        <nav class="nav">
+            <button class="nav-btn active" onclick="showSection('profile')">Profile</button>
+            <button class="nav-btn" onclick="showSection('education')">Education</button>
+            <button class="nav-btn" onclick="showSection('skills')">Skills</button>
+            <button class="nav-btn" onclick="showSection('experience')">Experience</button>
+            <button class="nav-btn" onclick="showSection('portfolio')">Portfolio</button>
+            <button class="nav-btn" onclick="showSection('contacts')">Contacts</button>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <section id="profile" class="section active">
+            <h2 class="section-title">About Me</h2>
+            <div class="card">
+                <p>Experienced Android Developer with over 12 years of experience in creating high-performance mobile applications for both users-facing and enterprise solutions.</p>
+                <br>
+                <p>Proficient in Java and Kotlin, specializing in modern Android technologies like Jetpack Compose, Coroutines, and Flow. Successfully designed and implemented application architectures using Clean Architecture, MVI, and MVVM patterns.</p>
+                <br>
+                <p>Skilled in handling all phases of the software development lifecycle, including requirements analysis, design, development, testing, maintenance, and legacy application refactoring.</p>
+            </div>
+        </section>
+
+        <section id="education" class="section">
+            <h2 class="section-title">Education</h2>
+            <div class="card">
+                <h3>Master's degree of Computer Science</h3>
+                <p>2002 - 2008</p>
+                <p>Nizhny Novgorod State Technical University, Russia</p>
+                <p>Specialization: Automated Information Processing and Control Systems</p>
+            </div>
+        </section>
+
+        <section id="skills" class="section">
+            <h2 class="section-title">Skills</h2>
+            <div class="skills-grid">
+                <div class="card">
+                    <h3>Programming Languages</h3>
+                    <p>Java, Kotlin, SQL</p>
+                </div>
+                <div class="card">
+                    <h3>Frameworks & Libraries</h3>
+                    <p>Jetpack Compose, Android Jetpack Components, Kotlin Coroutines, RxJava, Dagger/Hilt, Koin, Room</p>
+                </div>
+                <div class="card">
+                    <h3>Design</h3>
+                    <p>Clean Architecture, MVVM, MVI, SOLID Principles, Design Patterns</p>
+                </div>
+                <div class="card">
+                    <h3>Additional</h3>
+                    <p>Firebase, Git, JUnit, Espresso, Mockito, Scrum, Kanban</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="section">
+            <h2 class="section-title">Experience</h2>
+            <div class="card">
+                <h3>Senior Android Developer</h3>
+                <p>Mira-NN | Sept 2022 - Nov 2024</p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>Created enterprise-grade Android application for tire manufacturing plant</li>
+                    <li>Implemented complex UI using Jetpack Compose</li>
+                    <li>Developed real-time synchronization system using RabbitMQ</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Android Developer</h3>
+                <p>EPIC Software Development | Aug 2019 - Mar 2022</p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>Developed bike activity tracking application</li>
+                    <li>Improved app rating from 2.3 to 3.8</li>
+                    <li>Implemented MVVM architecture</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="portfolio" class="section">
+            <h2 class="section-title">Portfolio</h2>
+            <div class="card">
+                <h3>Enterprise Tablet Application</h3>
+                <p>Enterprise-grade Android application for tire manufacturing plant automation</p>
+                <p><strong>Technologies:</strong> Kotlin, Jetpack Compose, Coroutines, Clean Architecture, MVI, Room, RabbitMQ</p>
+                <div class="portfolio-images">
+                    <img src="/api/placeholder/280/500" alt="Screenshot 1" class="portfolio-image" onclick="showImage(this.src)">
+                    <img src="/api/placeholder/280/500" alt="Screenshot 2" class="portfolio-image" onclick="showImage(this.src)">
+                    <img src="/api/placeholder/280/500" alt="Screenshot 3" class="portfolio-image" onclick="showImage(this.src)">
+                </div>
+            </div>
+            <div class="card">
+                <h3>Bike Activity Tracker</h3>
+                <p>Android application for tracking bike activities using Bluetooth LE sensors and GPS</p>
+                <p><strong>Technologies:</strong> Java/Kotlin, MVVM, LiveData, Data Binding, Room, Retrofit, RxBluetooth</p>
+                <div class="portfolio-images">
+                    <img src="/api/placeholder/280/500" alt="Screenshot 1" class="portfolio-image" onclick="showImage(this.src)">
+                    <img src="/api/placeholder/280/500" alt="Screenshot 2" class="portfolio-image" onclick="showImage(this.src)">
+                    <img src="/api/placeholder/280/500" alt="Screenshot 3" class="portfolio-image" onclick="showImage(this.src)">
+                </div>
+            </div>
+        </section>
+
+        <section id="contacts" class="section">
+            <h2 class="section-title">Contacts</h2>
+            <div class="card">
+                <p><strong>Location:</strong> Porto, Portugal</p>
+                <p><strong>Email:</strong> dimitry.titov@gmail.com</p>
+                <p><strong>Phone:</strong> +351-920-327590</p>
+                <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/dmitry-titov-32722057" style="color: var(--accent-color);">linkedin.com/in/dmitry-titov-32722057</a></p>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal" onclick="hideModal()">
+        <img src="" alt="Enlarged screenshot">
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update active nav button
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[onclick="showSection('${sectionId}')"]`).classList.add('active');
+
+            // Close mobile menu if open
+            if (window.innerWidth <= 768) {
+                document.querySelector('.sidebar').classList.remove('active');
+            }
+        }
+
+        function showImage(src) {
+            const modal = document.querySelector('.modal');
+            const modalImg = modal.querySelector('img');
+            modal.classList.add('active');
+            modalImg.src = src;
+        }
+
+        function hideModal() {
+            document.querySelector('.modal').classList.remove('active');
+        }
+
+        function toggleMenu() {
+            document.querySelector('.sidebar').classList.toggle('active');
+        }
+    </script>
 </body>
 </html>
