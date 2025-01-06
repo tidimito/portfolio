@@ -18,33 +18,41 @@
         }
 
         .header {
-            background: #9bbfdb;
-            padding: 2rem;
+            background: #d0e2ee;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 100;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: 150px;
+            overflow: hidden;
         }
 
         .triangle {
-            width: 0;
-            height: 0;
-            border-left: 25px solid transparent;
-            border-right: 25px solid transparent;
-            border-bottom: 40px solid #608abf;
             position: absolute;
-            top: 2rem;
-            left: 2rem;
+            top: 0;
+            left: 0;
+            width: 150px;
+            height: 150px;
+            clip-path: polygon(0 0, 0% 100%, 100% 0);
+            background-color: #608abf;
+        }
+
+        .android-logo {
+            position: absolute;
+            bottom: 0;
+            right: 30px; /* Такой же отступ как у фото слева */
+            width: 180px; /* Увеличенная ширина */
+            height: 101.25px; /* Увеличенная высота */
+            opacity: 0.9;
         }
 
         .profile-container {
+            position: absolute;
+            top: 15px;
+            left: 0;
             display: flex;
             align-items: center;
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-left: 6rem;
         }
 
         .profile-img {
@@ -52,6 +60,9 @@
             height: 120px;
             border-radius: 50%;
             overflow: hidden;
+            border: 3px solid white;
+            position: relative;
+            left: 15px;
         }
 
         .profile-img img {
@@ -60,41 +71,67 @@
             object-fit: cover;
         }
 
+        .profile-info {
+            padding-top: 30px;
+            margin-left: 3rem;
+        }
+
         .profile-info h1 {
             color: #608abf;
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
+            white-space: nowrap;
         }
 
         .profile-info p {
             color: #333;
             font-size: 1.2rem;
+            white-space: nowrap;
+        }
+
+        .header-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            padding-top: 110px; /* Обновленный отступ */
         }
 
         .nav-buttons {
             display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 2rem;
+            align-items: center;
+            height: 20px;
+            background: #608abf;
+            padding: 0 1px;
         }
 
         .nav-btn {
-            padding: 0.75rem 1.5rem;
+            padding: 0 1.5rem;
             border: none;
-            background: #608abf;
-            color: white;
-            border-radius: 0.5rem;
+            background: #d0e2ee;
+            color: #333;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: all 0.2s;
             font-size: 1rem;
+            height: 100%;
+            display: flex;
+            align-items: center;
         }
 
-        .nav-btn:hover {
-            background: #4a6d9d;
+        .nav-btn:not(:last-child) {
+            border-right: 1px solid #608abf;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: #608abf;
+            color: white;
         }
 
         .main-content {
-            margin-top: 250px;
+            margin-top: 200px;
             padding: 2rem;
             max-width: 1200px;
             margin-left: auto;
@@ -103,7 +140,7 @@
 
         .section {
             margin-bottom: 4rem;
-            scroll-margin-top: 250px;
+            scroll-margin-top: 200px;
         }
 
         .section-title {
@@ -145,27 +182,59 @@
         }
 
         @media (max-width: 768px) {
+            .header {
+                height: 250px;
+            }
+
             .profile-container {
+                position: relative;
+                top: 1rem;
+                width: 100%;
                 flex-direction: column;
-                text-align: center;
-                padding-left: 0;
+                align-items: center;
             }
 
             .triangle {
                 display: none;
             }
 
+            .android-logo {
+                display: none;
+            }
+
+            .profile-img {
+                left: 0;
+            }
+
+            .profile-info {
+                margin-left: 0;
+                margin-top: 1rem;
+                text-align: center;
+            }
+
+            .header-content {
+                position: relative;
+                margin-top: 1rem;
+                padding-top: 0;
+            }
+
             .nav-buttons {
                 flex-wrap: wrap;
+                height: auto;
+                gap: 0.5rem;
+            }
+
+            .nav-btn:not(:last-child) {
+                border-right: none;
             }
 
             .main-content {
-                margin-top: 350px;
+                margin-top: 270px;
                 padding: 1rem;
             }
 
             .section {
-                scroll-margin-top: 350px;
+                scroll-margin-top: 270px;
             }
         }
     </style>
@@ -182,12 +251,19 @@
                 <p>Senior Android Developer</p>
             </div>
         </div>
-        <nav class="nav-buttons">
-            <button class="nav-btn" onclick="scrollToSection('profile')">Profile</button>
-            <button class="nav-btn" onclick="scrollToSection('experience')">Experience</button>
-            <button class="nav-btn" onclick="scrollToSection('portfolio')">Portfolio</button>
-            <button class="nav-btn" onclick="scrollToSection('contacts')">Contacts</button>
-        </nav>
+        <div class="header-content">
+            <nav class="nav-buttons">
+                <button class="nav-btn" onclick="activateButton(this, 'profile')">Profile</button>
+                <button class="nav-btn" onclick="activateButton(this, 'skills')">Skills</button>
+                <button class="nav-btn" onclick="activateButton(this, 'experience')">Experience</button>
+                <button class="nav-btn" onclick="activateButton(this, 'portfolio')">Portfolio</button>
+                <button class="nav-btn" onclick="activateButton(this, 'contacts')">Contacts</button>
+            </nav>
+        </div>
+        <svg class="android-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 231.78 130.59">
+            <title>android-robot-logo</title>
+            <path d="M317.95,288.52a9.65,9.65,0,1,1,9.65-9.65,9.65,9.65,0,0,1-9.65,9.65m-106.68,0a9.65,9.65,0,1,1,9.65-9.65,9.65,9.65,0,0,1-9.65,9.65m110.14-58.14L340.7,197a4,4,0,1,0-6.95-4h0l-19.53,33.83a121.25,121.25,0,0,0-99.21,0L195.47,193a4,4,0,0,0-7,4h0l19.29,33.41a113.89,113.89,0,0,0-59.09,91.16H380.5a113.9,113.9,0,0,0-59.09-91.16" transform="translate(-148.72 -190.95)" style="fill:#608abf"/>
+        </svg>
     </header>
 
     <main class="main-content">
@@ -206,6 +282,10 @@
                 <p>Nizhny Novgorod State Technical University, Russia</p>
                 <p>Specialization: Automated Information Processing and Control Systems</p>
             </div>
+        </section>
+
+        <section id="skills" class="section">
+            <h2 class="section-title">Skills</h2>
             <div class="skills-grid">
                 <div class="card">
                     <h3>Programming Languages</h3>
@@ -246,6 +326,24 @@
                     <li>Implemented MVVM architecture</li>
                 </ul>
             </div>
+            <div class="card">
+                <h3>Senior Android Developer</h3>
+                <p>Bell Integrator | Oct 2013 - Jan 2019</p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>Developed the Beeline TV app for streaming live TV channels</li>
+                    <li>Created application for testing and diagnosing cellular base stations</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Earlier Experience</h3>
+                <p>Previous roles include:</p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>Android Developer at Klin Institute (Aug 2012 - May 2013)</li>
+                    <li>Software Developer at XenZu Technologies (Apr 2012 - Jul 2012)</li>
+                    <li>Senior Software Developer at NCT Company (Jun 2008 - Dec 2010)</li>
+                    <li>Software Developer at Symphony Teleca (Jun 2006 - Jun 2008)</li>
+                </ul>
+            </div>
         </section>
 
         <section id="portfolio" class="section">
@@ -283,8 +381,12 @@
         </section>
     </main>
 
-    <script>
-        function scrollToSection(sectionId) {
+     <script>
+        function activateButton(button, sectionId) {
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            button.classList.add('active');
             document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
         }
     </script>
